@@ -1,4 +1,4 @@
-# [Budgeter](https://github.com/coderturtle/budgeter)
+# [Forkify](https://github.com/coderturtle/forkify)
 
 ## Wireframe
 

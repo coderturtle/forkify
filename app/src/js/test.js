@@ -1,2 +1,2 @@
 console.log('module added');
-export default 23;
+export default 456;

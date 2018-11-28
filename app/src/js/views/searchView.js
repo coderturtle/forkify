@@ -11,6 +11,21 @@ export const clearResults = () => {
   elements.searchResPages.innerHTML = '';
 };
 
+export const highlightSelected = id => {
+  // Remove all previous highlighted recipes
+  // Create an array from all DOM objects with the specified class name
+  const resultsArr = Array.from(document.querySelectorAll('.results__link'));
+  // Remove the highlighted class from each one
+  resultsArr.forEach(el => {
+    el.classList.remove('results__link--active');
+  });
+
+  // Now highlight the selected recipe
+  document
+    .querySelector(`a[href="#${id}"]`)
+    .classList.add('results__link--active');
+};
+
 // function to limit the characters displayed from the title
 const limitRecipeTitle = (title, limit = 17) => {
   const newTitle = [];

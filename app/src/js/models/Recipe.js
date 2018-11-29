@@ -73,7 +73,6 @@ export default class Recipe {
       const unitIndex = arrofIngredients.findIndex(el2 =>
         unitsShort.includes(el2)
       );
-
       let objIngredient;
       if (unitIndex > -1) {
         // There is a unit
@@ -110,5 +109,17 @@ export default class Recipe {
       return objIngredient;
     });
     this.ingredients = newIngredients;
+  }
+
+  updateServings(type) {
+    // Update Servings
+    const newServings = type === 'dec' ? this.servings - 1 : this.servings + 1;
+
+    // Update Ingredients
+    this.ingredients.forEach(ing => {
+      ing.count *= newServings / this.servings;
+    });
+
+    this.servings = newServings;
   }
 }

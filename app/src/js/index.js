@@ -81,6 +81,7 @@ const controlRecipe = async () => {
     try {
       // Get recipe data and parse ingredients
       await state.recipe.getRecipe();
+      console.log(state.recipe);
       state.recipe.parseIngredients();
 
       // Calculate servings and time
@@ -92,6 +93,7 @@ const controlRecipe = async () => {
       recipeView.renderRecipe(state.recipe);
     } catch (err) {
       alert('Error processing recipe');
+      console.log(err);
     }
   }
 };
@@ -99,3 +101,18 @@ const controlRecipe = async () => {
 ['hashchange', 'load'].forEach(event =>
   window.addEventListener(event, controlRecipe)
 );
+
+// Handling recipe button clicks
+elements.recipe.addEventListener('click', e => {
+  if (e.target.matches('.btn-decrease, .btn-decrease *')) {
+    // Decrease btn is clicked
+    if (state.recipe.servings > 1) {
+      state.recipe.updateServings('dec');
+    }
+  } else if (e.target.matches('.btn-increase, .btn-increase *')) {
+    // Increase btn is clicked
+    state.recipe.updateServings('inc');
+  }
+  // Update the recipe view
+  recipeView.updateServingsIngredients(state.recipe);
+});

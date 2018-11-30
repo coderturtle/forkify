@@ -7,20 +7,24 @@ export const clearRecipe = () => {
 
 const formatNum = num => {
   if (num) {
+    // As Math.round only returns an integer we need to multiple the number by the
+    // number of 10s of decimal points we wish to round to and then divide the result
+    // by the same number
+    const roundedNum = Math.round(num * 1000) / 1000;
     // num = 2.5 --> 2 1/2
     // num = 0.5 --> 1/2
-    const [int, dec] = num
+    const [int, dec] = roundedNum
       .toString()
       .split('.')
       .map(el => parseInt(el, 10));
 
-    if (!dec) return num;
+    if (!dec) return roundedNum;
 
     if (int === 0) {
-      const fr = new Fraction(num);
+      const fr = new Fraction(roundedNum);
       return `${fr.numerator}/${fr.denominator}`;
     } else {
-      const fr = new Fraction(num - int);
+      const fr = new Fraction(roundedNum - int);
       return `${int} ${fr.numerator}/${fr.denominator}`;
     }
   }
@@ -40,7 +44,7 @@ const createIngredient = ingredient => `
     </li>
 `;
 
-export const renderRecipe = recipe => {
+export const renderRecipe = (recipe, isLiked) => {
   const markup = `
     <figure class="recipe__fig">
     <img src="${recipe.img}" alt="${recipe.title}" class="recipe__img">
@@ -83,7 +87,9 @@ export const renderRecipe = recipe => {
     </div>
     <button class="recipe__love">
         <svg class="header__likes">
-            <use href="img/icons.svg#icon-heart-outlined"></use>
+            <use href="img/icons.svg#icon-heart${
+              isLiked ? '' : '-outlined'
+            }"></use>
         </svg>
     </button>
     </div>

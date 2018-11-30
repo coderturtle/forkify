@@ -1,5 +1,6 @@
 ## App specific ignores
 config.js
+todo.txt
 
 ## Ignore Node local and temp files
 # Logs
